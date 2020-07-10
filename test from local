@@ -1,2 +1,8 @@
 test commit from local file
 test another change
+so the process turns out to be:
+edit
+stage
+commit
+push (bottom right corner)
+you can then pull next time
