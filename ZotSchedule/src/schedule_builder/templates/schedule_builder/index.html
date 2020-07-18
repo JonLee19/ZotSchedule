@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang = "en-US">
+
+<head>
+	<meta charset="utf-8">
+	<title> Index page of Zotschedule's schedule builder application </title> 
+	<style>
+	</style>
+	
+</head>
+
+<body>
+	<p> You're crazy </p>
+	{% if courses %}
+		<ul>
+		{% for course in courses %}
+			<li> <a href="/schedule_builder/{{course.id}}/">{{course.name}} </a> </li>
+		{% endfor %}
+	{% else %}
+		<p> Index page unavailable. </p>
+	{% endif %}
+	
+</body>
+
+</html>
