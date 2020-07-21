@@ -3,6 +3,9 @@ from django.http import HttpResponse, Http404
 from .models import Course
 # Create your views here.
 
+department_abbrevs = {}
+
+
 def index(request):
     #shortcut: use render() and get_object_or_404()
     #return HttpResponse("Hello world. You're at the Zotschedule index.")
