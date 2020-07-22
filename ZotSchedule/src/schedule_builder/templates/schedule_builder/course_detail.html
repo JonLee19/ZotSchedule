@@ -10,23 +10,15 @@
 </head>
 
 <body>
-	<p> Courses: </p>
+	<p> You're crazy </p>
 	{% if courses %}
 		<ul>
 		{% for course in courses %}
-			<li> <a href="{% url 'schedule_builder:course_detail' course.id %}">{{course.name}} </a> </li>
+			<li> <a href="/schedule_builder/{{course.id}}/">{{course.name}} </a> </li>
 		{% endfor %}
 	{% else %}
 		<p> Index page unavailable. </p>
 	{% endif %}
-	<p> Subjects: </p>
-	{% if subjects %}
-		<ul>
-		{% for subject in subjects %}
-			<li> <a href="{% url 'schedule_builder:subject_detail' subject.id %}">{{subject.name}} </a> </li>
-		{% endfor %}
-	{% endif %}
-	
 	
 </body>
 

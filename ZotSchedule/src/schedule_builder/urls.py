@@ -7,10 +7,14 @@ Created on Jul 11, 2020
 from django.urls import path
 from . import views
 
+app_name = 'schedule_builder'
+
 urlpatterns = [
         path('', views.index, name = 'index'),
-        path('', views.list_view, name = 'list view'),
-        path('', views.block_view, name = 'block view'),
+        path('<int:course_id>/', views.course_detail, name = 'course_detail'),
+        path('<int:subject_id>/', views.subject_detail, name = 'subject_detail'),
+        path('', views.list_view, name = 'list_view'),
+        path('', views.block_view, name = 'block_view'),
         
         #add more (don't forget the commas)
     ]

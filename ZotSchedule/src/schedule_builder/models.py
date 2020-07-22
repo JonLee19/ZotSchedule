@@ -24,6 +24,9 @@ class Subject(models.Model):
     satisfies = None #req's like GE's it satisfies
     terms_offered = None #fall/winter/spring
     
+    def num_students_taking(self):
+        return NotImplemented
+    
     def add_to_student(self):
         return NotImplemented
     
