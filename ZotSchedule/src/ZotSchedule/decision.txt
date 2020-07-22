@@ -1,0 +1,20 @@
+Instantiating new class each academic term
+
+Pros
+-can define student-course relationship simply
+-can have 
+
+
+Cons
+
+-blank classes are not conceptually meaningful
+
+-repeated courses cannot be just copied
+	-will have full copies of each iteration of a class!
+
+-can't see all the instances of a class easily (has to search)
+	-no access to shared info across all offerings of a subject
+
+
+Decision:
+Student will be related to subjects, as their record only needs to hold the academic transcript- individual classes can be loaded for users once requested/needed!
