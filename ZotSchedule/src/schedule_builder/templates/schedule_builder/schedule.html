@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang = "en-US">
+
+<head>
+	<meta charset="utf-8">
+	<title> View Planned Schedule </title>
+	<style>
+	</style>
+
+</head>
+
+<body>
+	<p> Schedule </p>
+	{% if subject %}
+		<ul>
+		{% for s in subjects %}
+			<li> <a href="/schedule_builder/{{s.id}}/">{{s.name}} </a> </li>
+		{% endfor %}
+	{% else %}
+		<p> Detail page unavailable. </p>
+	{% endif %}
+
+</body>
+
+</html>
