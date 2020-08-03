@@ -13,8 +13,8 @@ urlpatterns = [
         path('', views.index, name = 'index'),
         path('<int:course_id>/', views.course_detail, name = 'course_detail'),
         path('<int:subject_id>/', views.subject_detail, name = 'subject_detail'),
-        path('', views.list_view, name = 'list_view'),
-        path('', views.block_view, name = 'block_view'),
+        path('list_view', views.list_view, name = 'list_view'),
+        path('block_view', views.block_view, name = 'block_view'),
         
         #add more (don't forget the commas)
     ]

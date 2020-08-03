@@ -71,3 +71,6 @@ def see_prerequisites():
 def course_restrictions():
     pass
 
+def schedule_view():
+    pass
+
