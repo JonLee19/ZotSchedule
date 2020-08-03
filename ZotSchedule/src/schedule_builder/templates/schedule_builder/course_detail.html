@@ -3,23 +3,27 @@
 
 <head>
 	<meta charset="utf-8">
-	<title> Index page of Zotschedule's schedule builder application </title> 
+	<title> Description of the course {{course.name}} </title>
 	<style>
 	</style>
-	
+
 </head>
 
 <body>
-	<p> You're crazy </p>
-	{% if courses %}
-		<ul>
-		{% for course in courses %}
-			<li> <a href="/schedule_builder/{{course.id}}/">{{course.name}} </a> </li>
-		{% endfor %}
-	{% else %}
-		<p> Index page unavailable. </p>
+	<p> {{course.name}} </p>
+	{% if not coures %}
+		<p> Detail page unavailable. Course may no longer be offered. </p>
+	{% else %} <!-- subject exists -->
+		<div class="category"> <p> Code: {{course.code}}</p> </div>
+		<div class="category"> <p> Type: {{course.type}}</p> </div>
+		<div class="category"> <p> Section: {{course.section}}</p> </div>
+		<div class="category"> <p> Units: {{course.units}}</p> </div>
+		<div class="category"> <p> Instructor: {{course.instructor}}</p> </div>
+		<div class="category"> <p> Time: {{course.time}}</p> </div>
+		<div class="category"> <p> Location: {{course.place}}</p> </div>
+		<div class="category"> <p> Final: {{course.final}}</p> </div>
 	{% endif %}
-	
+
 </body>
 
 </html>

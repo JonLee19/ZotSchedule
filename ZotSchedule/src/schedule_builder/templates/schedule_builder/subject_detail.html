@@ -3,23 +3,27 @@
 
 <head>
 	<meta charset="utf-8">
-	<title> Index page of Zotschedule's schedule builder application </title> 
+	<title> Description of the subject '{{subject.name}}' </title>
 	<style>
+	.class {
+		float: left;
+		width: 25%;
+	}
+
 	</style>
-	
+
 </head>
 
 <body>
-	<p> You're crazy </p>
-	{% if subject %}
-		<ul>
-		{% for s in subjects %}
-			<li> <a href="/schedule_builder/{{s.id}}/">{{s.name}} </a> </li>
-		{% endfor %}
-	{% else %}
-		<p> Detail page unavailable. </p>
+	<p> {{subject.name}} </p>
+	{% if not subject %}
+		<p> Detail page unavailable. Subject may no longer be offered. </p>
+	{% else %} <!-- subject exists -->
+		<div class="category"> <p> Department: {{subject.department}}</p> </div>
+		<div class="category"> <p> Pre-Req's: {{subject.pre_reqs}}</p> </div>
+		<div class="category"> <p> Co-Req's: {{subject.co_reqs}}</p> </div>
 	{% endif %}
-	
+
 </body>
 
 </html>
