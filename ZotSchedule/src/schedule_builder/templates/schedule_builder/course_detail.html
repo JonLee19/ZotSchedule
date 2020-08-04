@@ -11,8 +11,8 @@
 
 <body>
 	<p> {{course.name}} </p>
-	{% if not coures %}
-		<p> Detail page unavailable. Course may no longer be offered. </p>
+	{% if not course %}
+		<p> Detail page unavailable. Course may be no longer be offered. </p>
 	{% else %} <!-- subject exists -->
 		<div class="category"> <p> Code: {{course.code}}</p> </div>
 		<div class="category"> <p> Type: {{course.type}}</p> </div>

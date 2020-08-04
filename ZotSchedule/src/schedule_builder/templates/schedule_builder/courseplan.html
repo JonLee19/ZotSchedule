@@ -10,10 +10,11 @@
 </head>
 
 <body>
-	<p> Schedule </p>
-	{% if subject %}
+	<p> Course Plan for student {{student.name}} </p>
+	{% if student %}
+		
 		<ul>
-		{% for s in subjects %}
+		{% for course in courseplan %}
 			<li> <a href="/schedule_builder/{{s.id}}/">{{s.name}} </a> </li>
 		{% endfor %}
 	{% else %}

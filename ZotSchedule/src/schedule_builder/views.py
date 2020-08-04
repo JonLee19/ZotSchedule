@@ -33,14 +33,14 @@ def index(request):
     return render(request, 'schedule_builder/index.html', context)
     
 
-def course_detail(request, course_id: int):
+def course_detail(request, course_name: str):
     '''displays additional info of selected course'''
     #try: 
     #    course = Course.objects.get(pk=course_id)
     #except Course.DoesNotExist:
     #     raise Http404("Course does not exist")
     #return render(request, 'schedule_builder/detail.html', {'course': course})
-    course = get_object_or_404(Course, pk=course_id)
+    course = get_object_or_404(Course, name=course_name)
     return render(request, 'schedule_builder/course_detail.html', {'course': course})
 
 def subject_detail(request, subject_id: int):

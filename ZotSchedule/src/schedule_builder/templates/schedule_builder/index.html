@@ -10,21 +10,26 @@
 </head>
 
 <body>
+	<h1> All currently offered courses and subjects are listed below </h1>
+
 	<p> Courses: </p>
 	{% if courses %}
 		<ul>
 		{% for course in courses %}
-			<li> <a href="{% url 'schedule_builder:course_detail' course.id %}">{{course.name}} </a> </li>
+			<li> <a href="{% url 'schedule_builder:course_detail' course.name %}">{{course.name}} </a> </li>
+		</ul>
 		{% endfor %}
 	{% else %}
 		<p> Index page unavailable. </p>
 	{% endif %}
+	
 	<p> Subjects: </p>
 	{% if subjects %}
 		<ul>
 		{% for subject in subjects %}
 			<li> <a href="{% url 'schedule_builder:subject_detail' subject.id %}">{{subject.name}} </a> </li>
 		{% endfor %}
+		</ul>
 	{% endif %}
 	
 	

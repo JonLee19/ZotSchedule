@@ -5,23 +5,86 @@
 	<meta charset="utf-8">
 	<title> Description of the subject '{{subject.name}}' </title>
 	<style>
-	.class {
-		float: left;
-		width: 25%;
+	
+	.description {
+		margin-bottom: 20px;
+	}
+	
+	.info_wrapper {
+		display: inline-block;
+		background-color: navy;
+	}
+	
+	.basic_info {
+		display: inline-block;
+		padding: 0px 10px;
+		margin: 10px 20px;
+		background-color: deepskyblue;
 	}
 
+	.reqs_wrapper {
+		display: inline-block;
+		background-color: red;
+	}
+	
+	.requisites {
+		float: left;
+		display: inline;
+		padding: 10px 50px;
+		margin: 10px 50px;
+		background-color: pink;
+		
+	}
+	
+	.history:before{
+		content: "";
+		display: block;
+	}
 	</style>
 
 </head>
 
 <body>
-	<p> {{subject.name}} </p>
-	{% if not subject %}
-		<p> Detail page unavailable. Subject may no longer be offered. </p>
-	{% else %} <!-- subject exists -->
-		<div class="category"> <p> Department: {{subject.department}}</p> </div>
-		<div class="category"> <p> Pre-Req's: {{subject.pre_reqs}}</p> </div>
-		<div class="category"> <p> Co-Req's: {{subject.co_reqs}}</p> </div>
+	<h1> {{subject.name}} </h1>
+	<div class = "description"> 
+		<h2> Description </h2>
+		{% if not subject %}
+			<p> Detail page unavailable. Subject may no longer be offered. </p>
+		{% else %} <!-- subject exists -->
+			<div class = "info_wrapper"> 
+				<div class="basic_info"> <p> Department: {{subject.department}}</p> </div>
+				<div class="basic_info"> <p> Satisfies: {{subject.satisfies}}</p> </div>
+				<div class="basic_info"> <p> Terms Offered: {{subject.terms_offered}}</p> </div>
+			</div>	
+	</div>
+	
+	<h2> Requirements </h2>
+		<div class = "reqs_wrapper"> 
+			<div class="requisites"> <h3> Pre-Req's: </h3>
+				<ul>
+					{% if subject.pre_reqs == None %}
+						<li> <p> None </p> </li>
+					{% else %}
+						{% for s in subject.pre_reqs %}
+							<li> <a href="{% url 'schedule_builder:subject_detail' subject.id %}">{{subject.name}} </a> </li>
+						{% endfor %}
+					{% endif %}
+				</ul>
+			</div>
+			<div class="requisites"> <h3> Co-Req's: </h3>
+				<ul> 
+				{% if subject.co_reqs == None %}
+					<li> <p> None </p> </li>
+				{% else %}
+					{% for s in subject.co_reqs %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.id %}">{{subject.name}} </a> </li>
+					{% endfor %}				
+				{% endif %}
+				
+			</div>
+		</div>
+		
+		<div class="history"> <h2> Past Offerings: (unfinished) </h2> </div>
 	{% endif %}
 
 </body>
