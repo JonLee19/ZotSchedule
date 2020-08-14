@@ -10,12 +10,12 @@
 </head>
 
 <body>
-	<p> Course Plan for student {{student.name}} </p>
-	{% if student %}
+	<p> Course Plan for student {{name}} </p>
+	{% if courseplan %}
 		
 		<ul>
 		{% for course in courseplan %}
-			<li> <a href="/schedule_builder/{{s.id}}/">{{s.name}} </a> </li>
+			<li> <a href="/schedule_builder/{{course.id}}/">{{s.name}} </a> </li>
 		{% endfor %}
 	{% else %}
 		<p> Detail page unavailable. </p>

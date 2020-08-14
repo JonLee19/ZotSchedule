@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Course, Subject, CoursePlan, ClassSchedule, Enrollment, Student, ProjectedEnrollment
+
+from collections import defaultdict
 # Create your views here.
 
 department_abbrevs = {}
@@ -52,6 +54,16 @@ def subject_detail(request, subject_id: int):
     #return render(request, 'schedule_builder/detail.html', {'course': course})
     subject = get_object_or_404(Subject, pk=subject_id)
     return render(request, 'schedule_builder/subject_detail.html', {'subject': subject})
+
+def course_plan(request, course_plan_id: int):
+    course_plan = get_object_or_404(pk=course_plan_id)
+    courses_by_year = defaultdict(list)
+    for course in course_plan.courses:
+        courses_by_year[course.academic_term].append(course)
+    context = {'name': course_plan.name, 'course_plan': courses_by_year}
+    return render(request, 'schedule_builder/courseplan.html', context)
+
+
 
 def list_view(request):
     pass

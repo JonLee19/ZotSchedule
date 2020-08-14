@@ -1,65 +1,40 @@
 <!DOCTYPE html>
 <html lang = "en-US">
 
+
 <head>
 	<meta charset="utf-8">
 	<title> Description of the subject '{{subject.name}}' </title>
-	<style>
 	
-	.description {
-		margin-bottom: 20px;
-	}
+	{% load static %}
+	<link href= "{% static 'schedule_builder/CSS/subject_detail.css' %}" rel="stylesheet" type="text/css" >
 	
-	.info_wrapper {
-		display: inline-block;
-		background-color: navy;
-	}
 	
-	.basic_info {
-		display: inline-block;
-		padding: 0px 10px;
-		margin: 10px 20px;
-		background-color: deepskyblue;
-	}
-
-	.reqs_wrapper {
-		display: inline-block;
-		background-color: red;
-	}
-	
-	.requisites {
-		float: left;
-		display: inline;
-		padding: 10px 50px;
-		margin: 10px 50px;
-		background-color: pink;
-		
-	}
-	
-	.history:before{
-		content: "";
-		display: block;
-	}
-	</style>
 
 </head>
 
 <body>
 	<h1> {{subject.name}} </h1>
+	 
+	
+	 
 	<div class = "description"> 
-		<h2> Description </h2>
-		{% if not subject %}
-			<p> Detail page unavailable. Subject may no longer be offered. </p>
-		{% else %} <!-- subject exists -->
-			<div class = "info_wrapper"> 
-				<div class="basic_info"> <p> Department: {{subject.department}}</p> </div>
-				<div class="basic_info"> <p> Satisfies: {{subject.satisfies}}</p> </div>
-				<div class="basic_info"> <p> Terms Offered: {{subject.terms_offered}}</p> </div>
-			</div>	
+		<h2> Description of the course here </h2>
 	</div>
 	
-	<h2> Requirements </h2>
+	<div class = "major_info"> 
+		<div class = "basic_info_wrapper">
+			<h2> Basics </h2>
+			{% if subject %}
+				<div class="basic_info"> <p> Department: {{subject.department}}</p> </div>
+				<div class="basic_info"> <p> GE's Satisfied: {{subject.satisfies}}</p> </div>
+				<div class="basic_info"> <p> Terms Offered: {{subject.terms_offered}}</p> </div>
+			{% else %} <!-- subject doesn't exist -->
+				<p> Detail page unavailable. Subject may no longer be offered. </p>
+			{% endif %}
+		</div>	
 		<div class = "reqs_wrapper"> 
+			<h2 class = "header"> Requirements </h2>
 			<div class="requisites"> <h3> Pre-Req's: </h3>
 				<ul>
 					{% if subject.pre_reqs == None %}
@@ -82,10 +57,12 @@
 				{% endif %}
 				
 			</div>
-		</div>
+		</div>	
 		
-		<div class="history"> <h2> Past Offerings: (unfinished) </h2> </div>
-	{% endif %}
+	</div>
+	
+	
+	<div class="history"> <h2> Past Offerings: (unfinished) </h2> </div>
 
 </body>
 

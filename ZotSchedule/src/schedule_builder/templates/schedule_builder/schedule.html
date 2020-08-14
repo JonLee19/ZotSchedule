@@ -11,7 +11,7 @@
 
 <body>
 	<p> Schedule </p>
-	{% if subject %}
+	{% if schedule %}
 		<ul>
 		{% for s in subjects %}
 			<li> <a href="/schedule_builder/{{s.id}}/">{{s.name}} </a> </li>

@@ -10,6 +10,9 @@ past_subjects = {}
 
 past_classes = {}
 
+#REMEMBER TO THINK ABOUT WHETHER on_delete NEEDS TO BE CASCADE, or SET NULL
+#https://simpleisbetterthancomplex.com/tips/2016/07/25/django-tip-8-blank-or-null.html
+
 
 
 #for 4-year course plan
@@ -19,7 +22,7 @@ class Subject(models.Model):
     name = models.CharField(max_length=30)
     department = models.CharField(max_length=8) #make it 45 for the whole department name?
     number = models.CharField(max_length=10)
-    co_reqs = None
+    co_reqs = None #set as a many to one rel to self, on delete = set null, blank= true
     pre_reqs = None
     satisfies = None #req's like GE's it satisfies
     terms_offered = None #fall/winter/spring
@@ -46,6 +49,7 @@ class CoursePlan(models.Model):
     '''represents student's intended 4-year plan'''
     name = models.CharField(max_length=25, default = 'Default Name') #owner
     courses = models.ManyToManyField(Subject, related_name='course_plans', through='ProjectedEnrollment')
+    #b/c its through a 3rd party class, projected enrollment, deletions of one obj will only get rid of the 3rd party join table, not the other obj
     
     start_year = None
     
@@ -131,6 +135,7 @@ class Student(models.Model):
     #schedule = models.OneToOneField(ClassSchedule, on_delete=models.CASCADE, default = None)
     
     courses = models.ManyToManyField(Subject, related_name='students', through='Enrollment')
+    #supposed to change the many to many field to courses?
     
     def gpa(self):
         return NotImplemented
