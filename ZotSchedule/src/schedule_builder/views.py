@@ -86,3 +86,8 @@ def course_restrictions():
 def schedule_view():
     pass
 
+def about(request):
+    return render(request, 'schedule_builder/about.html', {})
+
+def contact(request):
+    return render(request, 'schedule_builder/contact.html', {})

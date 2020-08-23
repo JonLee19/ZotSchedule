@@ -18,5 +18,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('schedule_builder/', include('schedule_builder.urls')),
+    path('univers/', include('univers.urls')),
     path('admin/', admin.site.urls),
 ]

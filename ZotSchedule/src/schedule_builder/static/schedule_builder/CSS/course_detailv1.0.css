@@ -1,0 +1,57 @@
+
+h1, h2, h3 {
+	text-align: center;
+}
+
+.header {
+	margin: 10px;
+}
+
+.description {
+	margin-bottom: 20px;
+}
+
+.major_info {
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+	zoom: 1;
+}
+
+.basic_info_wrapper {
+	display: inline-block;
+	background-color: mediumTurquoise;
+	border-radius: 25px;
+	text-align: center;
+	vertical-align: top;
+}
+
+.basic_info {
+	display: block;
+	padding: 0px 10px;
+	margin: 10px 20px;
+	background-color: deepskyblue;
+}
+
+.reqs_wrapper {
+	vertical-align: top;
+	display: inline-block;
+	background-color: red;
+	border-radius: 25px;
+}
+
+.requisites {
+	float: left;
+	display: inline;
+	padding: 10px 50px;
+	margin: 0px 50px 15px;
+	background-color: pink;
+	border-radius: 25px;
+	
+}
+<!--
+.history:before{
+	content: "";
+	display: block;
+}
+-->

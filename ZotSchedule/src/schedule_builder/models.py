@@ -46,6 +46,7 @@ class Subject(models.Model):
     
     
 class CoursePlan(models.Model):
+    #rename to GraduationPlan? Academic Plan?
     '''represents student's intended 4-year plan'''
     name = models.CharField(max_length=25, default = 'Default Name') #owner
     courses = models.ManyToManyField(Subject, related_name='course_plans', through='ProjectedEnrollment')
@@ -120,6 +121,7 @@ class Course(models.Model): #only used on scheduling view/db
         return self.name
     
 class ClassSchedule(models.Model):
+    #rename to schedule?
     '''represents schedule for one quarter'''
     
     def __str__(self):

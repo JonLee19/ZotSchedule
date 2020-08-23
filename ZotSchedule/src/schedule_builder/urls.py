@@ -11,6 +11,8 @@ app_name = 'schedule_builder'
 
 urlpatterns = [
         path('', views.index, name = 'index'),
+        path('contact', views.contact, name = 'contact'),
+        path('about', views.about, name = 'about'),
         path('course/<course_name>/', views.course_detail, name = 'course_detail'),
         path('subject/<int:subject_id>/', views.subject_detail, name = 'subject_detail'),
         path('list_view', views.list_view, name = 'list_view'),
