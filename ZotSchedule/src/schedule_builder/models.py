@@ -1,23 +1,16 @@
 from django.db import models
 #from django.utils.timezone import now
 
-# Create your models here.
+#globals
 current_term = "Fall 2020"
-current_curriculum = {}
-all_subjects = {}
-current_subjects = {}
-past_subjects = {}
-
-past_classes = {}
 
 #REMEMBER TO THINK ABOUT WHETHER on_delete NEEDS TO BE CASCADE, or SET NULL
 #https://simpleisbetterthancomplex.com/tips/2016/07/25/django-tip-8-blank-or-null.html
 
+#Graduation Plans
 
-
-#for 4-year course plan
 class Subject(models.Model):
-    '''represents a general class offered for instruction, distinct from any individual offering of that class'''
+    '''represents a generic class offered for instruction, distinct from any individual offering of that class'''
     #description
     name = models.CharField(max_length=30)
     department = models.CharField(max_length=8) #make it 45 for the whole department name?
@@ -45,12 +38,10 @@ class Subject(models.Model):
         return self.name
     
     
-class CoursePlan(models.Model):
-    #rename to GraduationPlan? Academic Plan?
+class GraduationPlan(models.Model):
     '''represents student's intended 4-year plan'''
     name = models.CharField(max_length=25, default = 'Default Name') #owner
-    courses = models.ManyToManyField(Subject, related_name='course_plans', through='ProjectedEnrollment')
-    #b/c its through a 3rd party class, projected enrollment, deletions of one obj will only get rid of the 3rd party join table, not the other obj
+    subjects = models.ManyToManyField(Subject, related_name='graduation_plans', through='ProjectedEnrollment')
     
     start_year = None
     
@@ -62,20 +53,24 @@ class CoursePlan(models.Model):
     
 class ProjectedEnrollment(models.Model):
     '''represents a student's intent to take a class of a subject during a given academic term'''
-    subject = models.ForeignKey(Subject, related_name='projected_enrollments', on_delete=models.CASCADE)
-    course_plan = models.ForeignKey(CoursePlan, related_name='projected_enrollments', on_delete=models.CASCADE)
+    #b/c its through this 3rd party class, deletions of one obj will only get rid of the 3rd party join table, not the other obj
+
+    subject = models.ForeignKey(Subject, related_name='projected_enrollments', on_delete=models.CASCADE, default = 1)#test subject is id = 10
+    graduation_plan = models.ForeignKey(GraduationPlan, related_name='projected_enrollments', on_delete=models.CASCADE, default = 1) #test
     academic_term = models.CharField(max_length=15, default = current_term)
     
-    #enroll_date = models.DateTimeField(default=now) #to save signup times for graphs of when students sign up
+    #enroll_date = models.DateTimeField(default=now) 
+    #to save signup times for graphs of when students usually sign up for the class
     
     def __str__(self):
-        return self.subject.name + ": " + self.course_plan.name
+        #return "default name"
+        return self.subject.name + ": " + self.graduation_plan.name
 
 
 
 
 
-
+#Class Scheduling
 
 
 #for planning current quarter's classes
@@ -120,24 +115,47 @@ class Course(models.Model): #only used on scheduling view/db
     def __str__(self):
         return self.name
     
-class ClassSchedule(models.Model):
-    #rename to schedule?
-    '''represents schedule for one quarter'''
+class Schedule(models.Model):
+    '''represents a schedule of classes for the current academic term'''
+    
+    name = models.CharField(max_length=25, default = 'Default Name') #owner
+    #academic_term = models.CharField(max_length=15, default = current_term)
+    courses = models.ManyToManyField(Course, related_name='students', through='Enrollment')
     
     def __str__(self):
-        return 'Generic schedule'
+        return self.name
 
+class Enrollment(models.Model):
+    '''represents a student's enrollment in a course'''
+    
+    
+    course = models.ForeignKey(Course, related_name='enrollments', on_delete=models.CASCADE)
+    schedule = models.ForeignKey(Schedule, related_name='enrollments', on_delete=models.CASCADE)
+    academic_term = models.CharField(max_length=15, default = current_term)
+    #
+    ##to save signup times for graphs of when students sign up
+    ##enroll_date = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return self.course.name + ": " + self.schedule.name
+
+
+
+
+#return to this later, build user profile with use
 class Student(models.Model):
     '''represents a student user, including all subjects planned'''
+    #will hold references to both the student's current schedule and graduation plan
+    
+    
     #db only needs to hold the students transcript, not actually what current courses they are on
     name = models.CharField(max_length=25, default = 'Default Name')
     grade = None
     #transcript = None
-    #course_plan = models.OneToOneField(CoursePlan, on_delete=models.CASCADE, default = None)
+    #course_plan = models.OneToOneField(GraduationPlan, on_delete=models.CASCADE, default = None)
     #schedule = models.OneToOneField(ClassSchedule, on_delete=models.CASCADE, default = None)
     
-    courses = models.ManyToManyField(Subject, related_name='students', through='Enrollment')
-    #supposed to change the many to many field to courses?
+    
     
     def gpa(self):
         return NotImplemented
@@ -149,16 +167,6 @@ class Student(models.Model):
         return self.name
     
     
-class Enrollment(models.Model):
-    '''represents a student's enrollment in a course'''
-    course = models.ForeignKey(Subject, related_name='enrollments', on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, related_name='enrollments', on_delete=models.CASCADE)
-    academic_term = models.CharField(max_length=15, default = current_term)
-    #to save signup times for graphs of when students sign up
-    #enroll_date = models.DateTimeField(default=now)
-    
-    def __str__(self):
-        return self.course.name + ": " + self.student.name
 
 
     
@@ -169,12 +177,39 @@ class Enrollment(models.Model):
     
     
 def check_state():
-#from schedule_builder.models import Course, Subject, Student, Enrollment, CoursePlan, ProjectedEnrollment, check_state
+#from schedule_builder.models import Course, Subject, Schedule, Student, Enrollment, GraduationPlan, ProjectedEnrollment, check_state
     l = []
     l.append("Courses: "+", ".join([str(c) for c in Course.objects.all()]))
     l.append("Subjects: "+", ".join([str(s) for s in Subject.objects.all()]))
     l.append("Students: "+", ".join([str(s) for s in Student.objects.all()]))
-    l.append("Course Plan: "+", ".join([str(c) for c in CoursePlan.objects.all()]))
+    l.append("Course Plan: "+", ".join([str(c) for g in GraduationPlan.objects.all()]))
     l.append(f"Enrollments: {{{'; '.join([str(e) for e in Enrollment.objects.all()])}}}")
     l.append(f"Projected Enrollments: {{{'; '.join([str(e) for e in ProjectedEnrollment.objects.all()])}}}")
     print('\n'.join(l))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+#return to:
+
+# Create your models here.
+
+current_curriculum = {}
+all_subjects = {}
+current_subjects = {}
+past_subjects = {}
+
+past_classes = {}

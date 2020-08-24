@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Course, Subject, CoursePlan, ClassSchedule, Enrollment, Student, ProjectedEnrollment
+from .models import Subject, Course, Student #GraduationPlan, ProjectedEnrollment, Course, Schedule, Enrollment, Student
 
 from collections import defaultdict
 # Create your views here.
