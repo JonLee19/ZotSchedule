@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang = "en-US">
+
+<head>
+	<meta charset="utf-8">
+	<title> View Planned Schedule </title>
+	<style>
+	</style>
+
+</head>
+
+<body>
+	<p> {{name}}'s Graduation Plan </p>
+	{% if grad_plan %}
+		<table style="width:50%"> 
+			<tr> 
+				<th> </th>
+				<th> Fall </th>
+				<th> Winter </th>
+				<th> Spring </th>
+				<th> Summer </th>
+			</tr>
+			
+			<!-- {% with year='grad_plan.' test="test"%}
+			{% endwith %} <p> {{year}} is the year </p>
+			 -->
+			<tr>
+				<th> {{start_year}}-{{start_year|add:"1"}} </th>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year1.Fall %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year1.Winter %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year1.Spring %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year1.Summer %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th> {{start_year|add:"1"}}-{{start_year|add:"2"}} </th>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year2.Fall %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year2.Winter %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year2.Spring %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year2.Summer %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th> {{start_year|add:"2"}}-{{start_year|add:"3"}} </th>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year3.Fall %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year3.Winter %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year3.Spring %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year3.Summer %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th> {{start_year|add:"3"}}-{{start_year|add:"4"}} </th>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year4.Fall %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year4.Winter %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year4.Spring %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+				<td> 
+					<ul>
+					{% for subject in grad_plan.year4.Summer %}
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
+					{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			
+			
+		
+		</table>
+		<p>Add JS to allow more than 4 years if desired</p>
+		<!-- 
+		{% for course in courseplan %}
+			<li> <a href="/schedule_builder/{{course.id}}/">{{s.name}} </a> </li>
+		{% endfor %}
+		 -->
+		
+	{% else %}
+		<p> Graduation plan has not been created yet. </p>
+	{% endif %}
+
+</body>
+
+</html>

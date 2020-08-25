@@ -41,7 +41,7 @@
 						<li> <p> None </p> </li>
 					{% else %}
 						{% for s in subject.pre_reqs %}
-							<li> <a href="{% url 'schedule_builder:subject_detail' subject.id %}">{{subject.name}} </a> </li>
+							<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
 						{% endfor %}
 					{% endif %}
 				</ul>
@@ -52,7 +52,7 @@
 					<li> <p> None </p> </li>
 				{% else %}
 					{% for s in subject.co_reqs %}
-						<li> <a href="{% url 'schedule_builder:subject_detail' subject.id %}">{{subject.name}} </a> </li>
+						<li> <a href="{% url 'schedule_builder:subject_detail' subject.name %}">{{subject.name}} </a> </li>
 					{% endfor %}				
 				{% endif %}
 				

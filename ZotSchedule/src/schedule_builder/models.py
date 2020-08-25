@@ -2,7 +2,9 @@ from django.db import models
 #from django.utils.timezone import now
 
 #globals
-current_term = "Fall 2020"
+current_academic_term = "Fall 2020"
+current_year = 2019
+current_term = "Fall"
 
 #REMEMBER TO THINK ABOUT WHETHER on_delete NEEDS TO BE CASCADE, or SET NULL
 #https://simpleisbetterthancomplex.com/tips/2016/07/25/django-tip-8-blank-or-null.html
@@ -43,7 +45,7 @@ class GraduationPlan(models.Model):
     name = models.CharField(max_length=25, default = 'Default Name') #owner
     subjects = models.ManyToManyField(Subject, related_name='graduation_plans', through='ProjectedEnrollment')
     
-    start_year = None
+    start_year = models.IntegerField(default=current_year) #need to add ! or make as a lookup method that finds the min year
     
     def add_to_student_record(self):
         return NotImplemented
@@ -57,10 +59,17 @@ class ProjectedEnrollment(models.Model):
 
     subject = models.ForeignKey(Subject, related_name='projected_enrollments', on_delete=models.CASCADE, default = 1)#test subject is id = 10
     graduation_plan = models.ForeignKey(GraduationPlan, related_name='projected_enrollments', on_delete=models.CASCADE, default = 1) #test
-    academic_term = models.CharField(max_length=15, default = current_term)
+    year = models.IntegerField('year', default=current_year)
+    term = models.CharField(max_length=7, default=current_term)
+    
+    
+    academic_term = models.CharField(max_length=15, default = current_academic_term)
     
     #enroll_date = models.DateTimeField(default=now) 
     #to save signup times for graphs of when students usually sign up for the class
+    
+    #def year(self):
+    #    return int(self.academic_term.split()[1])
     
     def __str__(self):
         #return "default name"
@@ -131,7 +140,7 @@ class Enrollment(models.Model):
     
     course = models.ForeignKey(Course, related_name='enrollments', on_delete=models.CASCADE)
     schedule = models.ForeignKey(Schedule, related_name='enrollments', on_delete=models.CASCADE)
-    academic_term = models.CharField(max_length=15, default = current_term)
+    academic_term = models.CharField(max_length=15, default = current_academic_term)
     #
     ##to save signup times for graphs of when students sign up
     ##enroll_date = models.DateTimeField(default=now)
