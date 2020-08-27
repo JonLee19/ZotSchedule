@@ -1,0 +1,64 @@
+
+h1, h2, h3 {
+	text-align: center;
+}
+
+p {
+	text-align: center;
+	background-color: gold;
+}
+
+body {
+	background-color: floralwhite;
+}
+
+.gradplan table {
+	background-color: ghostwhite;
+	width: 50%;
+}
+
+.gradplan th {
+	background-color: deepskyblue;
+}
+
+.topheader {
+	padding: 10px;
+}
+
+.sideheader {
+	padding: 10px;
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
+}
+
+.gradplan table, th, tr, td {
+	border: 1px solid blue;
+	border-collapse: collapse;
+}
+
+.gradplan td {
+	padding: 10px 10px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.gradplan ul {
+	list-style-type: none;
+	list-style-position: outside;
+	padding: 0px;
+	margin: 0px;
+	
+}
+
+.gradplan td li {
+	padding: 5px;
+	background-color: antiquewhite;
+	border: 1px solid black;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.gradplan td li a {
+	text-decoration: none;
+}
