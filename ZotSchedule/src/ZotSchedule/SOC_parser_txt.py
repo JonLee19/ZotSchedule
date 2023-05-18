@@ -1,15 +1,10 @@
 from sys import argv
 from bs4 import BeautifulSoup
-from django import setup
-from django.conf import settings
-from django.db import connections
 import csv, requests, os
 import sqlite3
 
-# db_info = {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
+#use pandas!
+
 SOC_columns = {'id', 'name', 'department', 'number'}
 
 courses_list = []
@@ -19,6 +14,9 @@ POST_data = {'Submit': 'Display Text Results', 'YearTerm': '2023-92', 'Dept': 'C
 def get_cursor():
     conn = sqlite3.connect(r"..\db.sqlite3")
     return conn.cursor()
+
+def commit_cursor(cur):
+    cur.execute('commit')
 
 def print_all_subjects():
     conn = sqlite3.connect(r"..\db.sqlite3")
@@ -67,59 +65,23 @@ def main():
             for course_data in course_data_list:
                 course_txt = course_data.text.strip().rstrip('(Prerequisites)').strip()
                 course_components = course_txt.split(maxsplit=2)
-                courses_list = {'department': course_components[0], 'number': course_components[1], 'name': course_components[2]}
-                print(courses_list)
-
-    # setup()
-    # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ZotSchedule.settings')
-
-    # settings.configure(DATABASE={'default':db_info})
-    #insert into database
-    # conn = connections.create_connection('default')
-    # cur = conn.cursor()
+                courses_list.append({'department': course_components[0], 'number': course_components[1], 'name': course_components[2]})
+        
+        cur = get_cursor()
+        for course in courses_list:
+            print(course)
+            insert_subject(cur, **course)
+        commit_cursor(cur)
 
     print_all_subjects()
-    # conn = sqlite3.connect(r"..\db.sqlite3")
-    # # conn = sqlite3.connect(r"C:\Users\leejo\Personal\Coding Projects\ZotSchedule\ZotSchedule\src\db.sqlite3")
-    # cur = conn.cursor()
-    # res = cur.execute("SELECT * FROM schedule_builder_subject")
-    # for row in res:
-    #     print(row)
-    cur = get_cursor()
-    insert_subject(cur, name="test django again", department="default", number="defaultnum")
-    # task = ['default django insert', 'default', 'defaultnum']
-    # cur.execute("INSERT INTO schedule_builder_subject(name, department, number) \
-    #             VALUES ('default django 1', 'default', 'defaultnum')")
+
+    # cur = get_cursor()
+    # insert_subject(cur, name="test django again", department="default", number="defaultnum")
+    # commit_cursor(cur)
+    # print_all_subjects()
     
-    # res = cur.execute("SELECT * FROM schedule_builder_subject")
-    # for row in res:
-    #     print(row)
-
-    # conn.commit()
-    cur.execute("commit")
-    print_all_subjects()
-    
-    # task = ['default django insert', 'default', 'defaultnum']
-    # cur.execute('''INSERT INTO schedule_builder_subject(name, department, number)
-    #             VALUES (?, ?, ?)''',
-    #                     task)
-
-    # print([i for i in course_list.children])
-        # print("Existing records: ")
-        # # csv_reader = csv.DictReader(csv_file, fieldnames=SOC_columns)
-        # for row in txt_file:
-        #     print(row)
-
-    # with open(csv_fn, 'a+') as csv_file:
-    #     csv_writer = csv.DictWriter(csv_file, fieldnames=SOC_columns)
-    #     csv_writer.writeheader()
-    #     csv_writer.writerows()
-            
-    
-
 if __name__ == "__main__":
     #for ease of debugging
     argv[1] = (r'C:\Users\leejo\Personal\Coding Projects\ZotSchedule\ZotSchedule\src\src_data\WebSoc-request-html.txt')
-
     main()
 
