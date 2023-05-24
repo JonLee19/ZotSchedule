@@ -12,7 +12,6 @@ courses_list = []
 POST_data = {'Submit': 'Display Text Results', 'YearTerm': '2023-92', 'Dept': 'COMPSCI', 'Division': 'ANY'}
 
 def get_cursor():
-    conn = sqlite3.connect(r"..\db.sqlite3")
     return conn.cursor()
 
 def commit_cursor(cur):
@@ -67,11 +66,12 @@ def main():
                 course_components = course_txt.split(maxsplit=2)
                 courses_list.append({'department': course_components[0], 'number': course_components[1], 'name': course_components[2]})
         
-        cur = get_cursor()
+        conn = conn = sqlite3.connect(r"..\db.sqlite3")
+        cur = conn.cursor()
         for course in courses_list:
-            print(course)
             insert_subject(cur, **course)
         commit_cursor(cur)
+        conn.close()
 
     print_all_subjects()
 
